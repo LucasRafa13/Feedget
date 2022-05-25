@@ -16,6 +16,8 @@ export class SubmitFeedbackUseCase {
   async execute(request: SubmitFeedbackUseCaseRequest) {
     const { type, comment, screenshot } = request
 
+    
+
     if (!type) {
       throw new Error("Type is required.")
     }
@@ -34,7 +36,7 @@ export class SubmitFeedbackUseCase {
       screenshot
     })
 
-    await this.mailAdapter.sendMain({
+    await this.mailAdapter.sendMail({
       subject: "Novo feedback",
       body: [
         `<div style="font-family: sans-serif; font-size: 16px; color: #111;">`,
