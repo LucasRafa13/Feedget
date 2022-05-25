@@ -16,8 +16,6 @@ export class SubmitFeedbackUseCase {
   async execute(request: SubmitFeedbackUseCaseRequest) {
     const { type, comment, screenshot } = request
 
-    
-
     if (!type) {
       throw new Error("Type is required.")
     }
@@ -36,12 +34,13 @@ export class SubmitFeedbackUseCase {
       screenshot
     })
 
-    await this.mailAdapter.sendMail({
+    await this.mailAdapter.sendMain({
       subject: "Novo feedback",
       body: [
         `<div style="font-family: sans-serif; font-size: 16px; color: #111;">`,
         `<p>Tipo do feedback: ${type}</p>`,
         `<p>Comentário: ${comment}</p>`,
+        screenshot ? ` <img src="${screenshot}"/>` : ``,
         `</div>`
       ].join("\n")
     })
